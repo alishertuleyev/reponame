@@ -1,0 +1,18 @@
+{
+  "autocell_root": "C:\\AutoCell",
+  "nssm": "C:\\AutoCell\\bin\\nssm.exe",
+  "services": {
+    "backend": "AutoCellBackend",
+    "frontend": "AutoCellFrontend"
+  },
+  "features": {
+    "entry_block": true
+  },
+  "entry_block": {
+    "asrs1_cells": [1, 93],
+    "asrs2_cells": [94, 186],
+    "block_types": [1, 5],
+    "waiting_index": { "1": 20, "2": 46 },
+    "outfeed_index": { "1": 4, "2": 6 }
+  }
+}

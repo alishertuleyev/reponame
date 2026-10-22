@@ -1,0 +1,6 @@
+{
+  "id": "entry_block",
+  "title": "Блок входа TYPE 1 и 5, если нет пустых ячеек",
+  "backend": true,
+  "frontend": true
+}
