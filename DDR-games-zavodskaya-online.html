@@ -4762,65 +4762,108 @@ var _gv=null,_gd=null,_ga=null,_gb=null,_gp=null,_gq=null,_gs=null,_pM=null,_por
 var PvpDeath="\u0412\u0430\u0441 \u0443\u0431\u0438\u043b\u0438 \u043d\u0430 Dust2";
 function pvpApi(){return{on:!1,built:!1,team:0,score:[0,0],kills:0,deaths:0,bots:[],props:[],group:null,respawn:0,round:1,ox:150,oz:30,attacker:null,_set:"",_route:null,hemi:null,enter(t,e){pvpEnter(this,t,e)},leave(){pvpLeave(this)},sync(t){t?this.on||this.enter(g.game,(g.player.slot||0)%2):this.on&&this.leave()},tick(t){try{pvpTick(this,t)}catch(e){console.error("pvp",e)}},ray(t,e,s){return pvpRay(t,e,s)},hit(t,e,s,n){pvpHit(t,e,s,n)},down(t){pvpDown(t)},place(t){pvpPlace(t)},line(){return pvpLine()},grav(t,e){pvpGrav(t,e)}}}
 function pvpLetter(o,t){let e=document.createElement("canvas");e.width=256,e.height=256;let s=e.getContext("2d");return s.fillStyle=t,s.fillRect(0,0,256,256),s.fillStyle="#3a2412",s.font="700 150px sans-serif",s.textAlign="center",s.textBaseline="middle",s.fillText(o,128,138),s.strokeStyle="#6a4a28",s.lineWidth=10,s.strokeRect(18,18,220,220),se(e)}
-function pvpEnsure(o){if(o.built)return;o.built=!0,o.group=new Xt,o.group.name="dust2",g.scene.add(o.group);let t={floor:new Bt({color:13678858}),wall:new Bt({color:12884586}),wall2:new Bt({color:11583672}),crate:new Bt({color:9263666}),metal:new Bt({color:7164536}),trimT:new Bt({color:10705956}),trimCT:new Bt({color:2908058}),ceil:new Bt({color:10065896}),A:new Bt({map:pvpLetter("A","#e6c48a")}),B:new Bt({map:pvpLetter("B","#e6c48a")})},e=[];
-function box(s,n,i,r,a,l,c){e.push([s,n,i,r,a,l,c])}
+function pvpSign(o,t){let e=document.createElement("canvas");e.width=512,e.height=512;let s=e.getContext("2d");s.fillStyle=t,s.fillRect(0,0,512,512);let n=s.createLinearGradient(0,0,0,512);n.addColorStop(0,"rgba(255,255,255,.18)"),n.addColorStop(.5,"rgba(0,0,0,0)"),n.addColorStop(1,"rgba(0,0,0,.28)"),s.fillStyle=n,s.fillRect(0,0,512,512),s.strokeStyle="#24180f",s.lineWidth=28,s.strokeRect(18,18,476,476),s.strokeStyle="#e7d7b0",s.lineWidth=6,s.strokeRect(36,36,440,440),s.fillStyle="#24180f",s.font="700 250px sans-serif",s.textAlign="center",s.textBaseline="middle",s.fillText(o,256,278);let i=xe(9);for(let r=0;r<900;r++)s.fillStyle=`rgba(40,24,12,${i()*.22})`,s.fillRect(i()*512,i()*512,2+i()*8,1);return se(e)}
+function pvpSkyTex(){let e=document.createElement("canvas");e.width=8,e.height=512;let s=e.getContext("2d"),n=s.createLinearGradient(0,0,0,512);return n.addColorStop(0,"#4e93cc"),n.addColorStop(.38,"#8eb8d8"),n.addColorStop(.62,"#e4d2ae"),n.addColorStop(1,"#c9ae82"),s.fillStyle=n,s.fillRect(0,0,8,512),se(e,{repeat:!1})}
+function pvpWindow(){let e=document.createElement("canvas");e.width=256,e.height=160;let s=e.getContext("2d");s.fillStyle="#cbb892",s.fillRect(0,0,256,160),s.fillStyle="#6f8ea3",s.fillRect(18,16,100,108),s.fillRect(138,16,100,108);let n=s.createLinearGradient(0,16,0,124);n.addColorStop(0,"rgba(255,255,255,.35)"),n.addColorStop(1,"rgba(20,40,60,.25)"),s.fillStyle=n,s.fillRect(18,16,100,108),s.fillRect(138,16,100,108),s.fillStyle="#8d734c",s.fillRect(0,0,256,14),s.fillRect(0,146,256,14),s.fillRect(0,0,16,160),s.fillRect(240,0,16,160),s.fillRect(118,14,20,134),s.fillStyle="#5c4630",s.fillRect(18,68,220,8);let i=xe(4);for(let r=0;r<240;r++)s.fillStyle=`rgba(60,40,20,${i()*.25})`,s.fillRect(i()*256,i()*160,2,1);return se(e,{repeat:!1})}
+function pvpEnsure(o){if(o.built)return;o.built=!0,o.group=new Xt,o.group.name="dust2",g.scene.add(o.group);let sand=Dd(41,[.86,.76,.56],512,!1),stone=Dd(42,[.8,.7,.55],512,!0),stoneB=Dd(43,[.7,.6,.47],512,!0),baseTx=Dd(44,[.46,.39,.32],256,!1),trimT=Dd(45,[.74,.42,.26],256,!1),trimCT=Dd(46,[.3,.4,.5],256,!1),ceilTx=Dd(47,[.58,.53,.46],256,!1),woodTx=Bi([.55,.36,.18],[.32,.18,.08],81),metalTx=Wg(56,[.45,.46,.48]),bagTx=Dd(48,[.64,.58,.4],256,!1),std=(pack,color,rough,metal)=>new W({map:pack.map,normalMap:pack.normalMap,roughnessMap:pack.roughnessMap,color:color==null?16777215:color,roughness:rough==null?.94:rough,metalness:metal||0}),mats={floor:std(sand,16777215,.96,0),path:std(sand,13481746,1,0),stone:std(stone,16777215,.9,0),stoneB:std(stoneB,16777215,.92,0),base:std(baseTx,16777215,.95,0),trimT:std(trimT,16777215,.88,0),trimCT:std(trimCT,16777215,.88,.02),ceil:std(ceilTx,15592652,.96,0),wood:std(woodTx,16777215,.86,.02),metal:std(metalTx,12040116,.52,.22),bag:std(bagTx,16777215,.95,0),win:new W({map:pvpWindow(),roughness:.62,metalness:.04})};mats.ceil.normalScale.set(.35,.35),mats.metal.envMapIntensity=.25,mats.path.polygonOffset=!0,mats.path.polygonOffsetFactor=-1,mats.path.polygonOffsetUnits=-8;let buckets={floor:[],path:[],stone:[],stoneB:[],base:[],trimT:[],trimCT:[],ceil:[],wood:[],metal:[],bag:[]};
+function uv(geo,w,h,d){let p=geo.attributes.position,n=geo.attributes.normal,u=geo.attributes.uv,sc=.42;for(let i=0;i<p.count;i++){let x=p.getX(i),y=p.getY(i),z=p.getZ(i),ax=Math.abs(n.getX(i)),ay=Math.abs(n.getY(i)),az=Math.abs(n.getZ(i));ay>=ax&&ay>=az?u.setXY(i,(x+w/2)*sc,(z+d/2)*sc):ax>=az?u.setXY(i,(z+d/2)*sc,(y+h/2)*sc):u.setXY(i,(x+w/2)*sc,(y+h/2)*sc)}return geo}
+function put(kind,w,h,d,x,y,z){let geo=uv(new Y(w,h,d),w,h,d);geo.translate(x,y,z),buckets[kind].push(geo)}
+function solid(x,y,z,w,h,d){let X=x+o.ox,Z=z+o.oz;g.world.addXYZ(X-w/2,y-h/2,Z-d/2,X+w/2,y+h/2,Z+d/2)}
+let e=[];
+function box(x,y,z,w,h,d,k){e.push([x,y,z,w,h,d,k])}
 box(0,-.3,0,70,.6,72,"floor");
-box(0,1.6,-34.3,70,3.2,.6,"wall");
-box(0,1.6,34.3,70,3.2,.6,"wall");
-box(-34.7,1.6,0,.6,3.2,69,"wall");
-box(34.7,1.6,0,.6,3.2,69,"wall");
-box(0,1.6,-33,22,3.2,.45,"trimT");
-box(-10.8,1.6,-29,.5,3.2,8,"wall");
-box(10.8,1.6,-29,.5,3.2,8,"wall");
-box(-6.7,1.6,-24.8,8.2,3.2,.5,"wall");
-box(6.7,1.6,-24.8,8.2,3.2,.5,"wall");
-box(-16.2,1.6,-23.2,.5,3.2,3.2,"wall");
-box(-16.2,1.6,-17.5,.5,3.2,3.4,"wall");
-box(16.2,1.6,-23.3,.5,3.2,3,"wall");
-box(16.2,1.6,-16.9,.5,3.2,3.4,"wall");
-box(-9.4,1.6,-15.4,13.6,3.2,.5,"wall2");
-box(9.4,1.6,-15.4,13.6,3.2,.5,"wall2");
-box(-4.35,1.6,-6.2,.5,3.2,18.4,"wall");
-box(-4.35,1.6,10.1,.5,3.2,8.2,"wall");
-box(4.35,1.6,-5.7,.5,3.2,19.4,"wall");
-box(4.35,1.6,11.5,.5,3.2,5.4,"wall");
-box(-4.35,1.6,20,.5,3.2,12,"wall");
-box(4.35,1.6,20,.5,3.2,12,"wall");
-box(23.4,1.6,-4,.5,3.2,40,"wall");
-box(19.7,1.6,-24.2,7.6,3.2,.5,"wall");
-box(15.9,1.6,-2.4,.5,3.2,31.2,"wall");
-box(26.6,1.6,20,.5,3.2,16,"wall");
-box(19.2,1.6,26.5,14.8,3.2,.5,"wall");
-box(6.4,1.6,20.2,.5,3.2,12.2,"wall2");
-box(2,1.6,33.2,24,3.2,.5,"trimCT");
-box(-10.2,1.6,30,.5,3.2,6.6,"wall");
-box(14.2,1.6,30,.5,3.2,6.6,"wall");
-box(-8.3,1.6,6.45,8.2,3.2,.45,"wall2");
-box(-8.3,1.6,2.55,8.2,3.2,.45,"wall2");
-box(-32.6,1.6,16,.5,3.2,22,"wall");
-box(-22,1.6,26.6,21,3.2,.5,"wall");
-box(-30.2,1.6,6.2,7.2,3.2,.5,"wall");
-box(-16.2,1.6,6.2,6.4,3.2,.5,"wall");
-box(-28.6,1.6,-8,.5,3.2,28,"wall2");
-box(-18.7,1.6,-12,.5,3.2,14,"ceil");
-box(-18.7,1.6,-22.5,.5,3.2,2.2,"ceil");
-box(-23.6,2.55,-9,10,.28,26,"ceil");
-box(2.3,.28,-1.4,1.4,.56,1.4,"crate");
-box(17,.7,19,2.2,1.4,2.2,"crate");
-box(11,.5,16.5,1.3,1,1.3,"crate");
-box(-26,.65,15,2.4,1.3,2.4,"crate");
-box(-26,.42,19,3.8,.84,1.7,"metal");
+box(0,1.6,-34.3,70,3.2,.6,"stone");
+box(0,1.6,34.3,70,3.2,.6,"stone");
+box(-34.7,1.6,0,.6,3.2,69,"stone");
+box(34.7,1.6,0,.6,3.2,69,"stone");
+box(0,1.55,-33,22,3.1,.4,"trimT");
+box(-10.8,1.6,-29,.45,3.2,8,"stone");
+box(10.8,1.6,-29,.45,3.2,8,"stone");
+box(-6.7,1.6,-24.8,8.2,3.2,.45,"stone");
+box(6.7,1.6,-24.8,8.2,3.2,.45,"stone");
+box(-16.2,1.6,-23.2,.45,3.2,3.2,"stone");
+box(-16.2,1.6,-17.5,.45,3.2,3.4,"stone");
+box(16.2,1.6,-23.3,.45,3.2,3,"stone");
+box(16.2,1.6,-16.9,.45,3.2,3.4,"stone");
+box(-9.4,1.6,-15.4,13.6,3.2,.45,"stoneB");
+box(9.4,1.6,-15.4,13.6,3.2,.45,"stoneB");
+box(-4.35,1.6,-6.2,.42,3.2,18.4,"stone");
+box(-4.35,1.6,10.1,.42,3.2,8.2,"stone");
+box(4.35,1.6,-5.7,.42,3.2,19.4,"stone");
+box(4.35,1.6,11.5,.42,3.2,5.4,"stone");
+box(-4.35,1.6,20,.42,3.2,12,"stone");
+box(4.35,1.6,20,.42,3.2,12,"stone");
+box(23.4,1.6,-4,.45,3.2,40,"stone");
+box(19.7,1.6,-24.2,7.6,3.2,.45,"stone");
+box(15.9,1.6,-2.4,.42,3.2,31.2,"stoneB");
+box(26.6,1.6,20,.42,3.2,16,"stone");
+box(19.2,1.6,26.5,14.8,3.2,.42,"stone");
+box(6.4,1.6,20.2,.42,3.2,12.2,"stoneB");
+box(2,1.55,33.2,24,3.1,.4,"trimCT");
+box(-10.2,1.6,30,.42,3.2,6.6,"stone");
+box(14.2,1.6,30,.42,3.2,6.6,"stone");
+box(-8.3,1.6,6.45,8.2,3.2,.4,"stoneB");
+box(-8.3,1.6,2.55,8.2,3.2,.4,"stoneB");
+box(-32.6,1.6,16,.42,3.2,22,"stone");
+box(-22,1.6,26.6,21,3.2,.42,"stone");
+box(-30.2,1.6,6.2,7.2,3.2,.42,"stone");
+box(-16.2,1.6,6.2,6.4,3.2,.42,"stone");
+box(-28.6,1.6,-8,.42,3.2,28,"stoneB");
+box(-18.7,2.7,-12,.18,1.1,14,"ceil");
+box(-18.7,2.7,-22.5,.18,1.1,2.2,"ceil");
+box(-23.6,2.55,-9,10,.22,26,"ceil");
+box(0,3.28,-29.4,33,.18,8.6,"ceil");
+box(2,3.28,32.15,26,.18,4,"ceil");
+box(2.3,.32,-1.4,1.5,.64,1.5,"crate");
+box(17,.72,19,2.3,1.44,2.3,"crate");
+box(11,.52,16.5,1.35,1.04,1.35,"crate");
+box(-26,.68,15,2.5,1.36,2.5,"crate");
+box(-26,.42,19,3.8,.84,1.6,"metal");
 box(-15,.55,13,2.6,1.1,2,"crate");
-box(9.5,1.9,7.3,7.2,.28,3.3,"wall2");
-for(let s=0;s<5;s++){let n=.4*(s+1);box(5.7,n/2,3.55+s*.75,2.3,n,.75,"wall2")}
-for(let s=0;s<5;s++){let n=Math.max(.4,2-s*.4);box(12.5+s*.85,n/2,9.3+s*.7,2.2,n,.7,"wall2")}
+box(9.5,1.9,7.3,7.2,.22,3.3,"stoneB");
+for(let s=0;s<5;s++){let n=.42*(s+1);box(5.7,n/2,3.55+s*.75,2.3,n,.7,"stoneB")}
+for(let s=0;s<5;s++){let n=Math.max(.38,2-s*.38);box(12.5+s*.85,n/2,9.3+s*.7,2.15,n,.62,"stoneB")}
+let key={floor:"floor",stone:"stone",stoneB:"stoneB",trimT:"trimT",trimCT:"trimCT",ceil:"ceil",metal:"metal"};
 g.world.beginSet("dust");
-for(let s of e){let n=s[0]+o.ox,i=s[2]+o.oz,r=s[3],a=s[4],l=s[5],c=new J(new Y(r,a,l),t[s[6]]||t.wall);c.position.set(n,s[1],i),o.group.add(c),g.world.addXYZ(n-r/2,s[1]-a/2,i-l/2,n+r/2,s[1]+a/2,i+l/2)}
+let crates=[];
+for(let s of e){let x=s[0]+o.ox,y=s[1],z=s[2]+o.oz,w=s[3],h=s[4],d=s[5];g.world.addXYZ(x-w/2,y-h/2,z-d/2,x+w/2,y+h/2,z+d/2);if(s[6]==="crate"){crates.push([x,y,z,w,h,d]);continue}put(key[s[6]]||"stone",w,h,d,x,y,z);if(s[6]==="stone"||s[6]==="stoneB"||s[6]==="trimT"||s[6]==="trimCT")put("base",w+.06,.38,d+.06,x,.19,z)}
+put("path",3.1,.012,46,o.ox,.02,o.oz-2);
+put("path",3.4,.012,34,o.ox+19,.02,o.oz-4);
+put("path",3,.012,18,o.ox-24,.02,o.oz+8);
+for(let x=-28;x<=28;x+=4.6){put("stoneB",.34,3.05,.16,o.ox+x,1.52,o.oz-33.9);put("stoneB",.34,3.05,.16,o.ox+x,1.52,o.oz+33.9);put("base",.5,.16,.28,o.ox+x,3.18,o.oz-33.88);put("base",.5,.16,.28,o.ox+x,3.18,o.oz+33.88)}
+for(let z=-28;z<=28;z+=4.6){put("stoneB",.16,3.05,.34,o.ox-34.32,1.52,o.oz+z);put("stoneB",.16,3.05,.34,o.ox+34.32,1.52,o.oz+z)}
+for(let x=-14;x<=14;x+=3.4)put("wood",.18,.16,8.2,o.ox+x,3.08,o.oz-29.4);
+for(let x=-8;x<=12;x+=3.4)put("wood",.18,.16,3.6,o.ox+x,3.08,o.oz+32.15);
+function door(x,z,w,d){put("wood",w,2.15,d,o.ox+x,1.12,o.oz+z);put("metal",w*.82,.08,d+.03,o.ox+x,1.2,o.oz+z);solid(x,1.12,z,w,2.2,d)}
+door(-1.9,-14.95,1.2,.1);
+door(1.9,-14.95,1.2,.1);
+door(16.2,-21.2,.1,1);
+door(16.2,-18.9,.1,1);
+door(-10.5,4.5,2.2,.1);
+door(-6.1,4.5,2.2,.1);
+function crateAt(x,y,z,w,h,d){let g0=new Xt;g0.position.set(x,y,z);let body=new J(uv(new Y(w*.96,h*.9,d*.96),w,h,d),mats.wood);body.castShadow=body.receiveShadow=!0;let band=new J(uv(new Y(w,h*.12,d),w,h*.12,d),mats.metal);band.position.y=h*.22,band.castShadow=!0;let band2=band.clone();band2.position.y=-h*.22;let lid=new J(uv(new Y(w*1.02,.045,d*1.02),w,.045,d),mats.wood);lid.position.y=h*.46;g0.add(body,band,band2,lid),o.group.add(g0);return g0}
+for(let c of crates)crateAt(c[0],c[1],c[2],c[3],c[4],c[5]);
+[[2,-20],[1,2],[18,6],[-22,12]].forEach((p,i)=>{let s=.85+i%2*.2,mesh=crateAt(o.ox+p[0],s/2,o.oz+p[1],s,s,s);o.props.push({prop:!0,state:"ok",x:o.ox+p[0],z:o.oz+p[1],gy:0,h:s,mesh:mesh,gfly:null})});
+function barrel(x,z){let g0=new Xt;g0.position.set(o.ox+x,.4,o.oz+z);let body=new J(new ct(.3,.3,.74,14),mats.metal);body.castShadow=body.receiveShadow=!0;let ring=new J(new ct(.33,.33,.07,14),mats.metal);ring.position.y=.24;let ring2=ring.clone();ring2.position.y=-.24;g0.add(body,ring,ring2),o.group.add(g0);solid(x,.4,z,.66,.8,.66)}
+barrel(14.4,22.4);barrel(-29.2,21.6);barrel(-6.5,-27.5);barrel(20.5,-18.5);
+function bags(x,z,w,d){for(let i=0;i<3;i++)put("bag",w-i*.12,.24,d-i*.08,o.ox+x,.12+i*.22,o.oz+z);solid(x,.36,z,w,.72,d)}
+bags(21.3,23.4,1.7,.85);bags(-30.4,22.2,1.8,.9);bags(-12.6,-27.2,1.5,.7);
 g.world.endSet();
-let s=new J(new Y(6,.05,6),t.A);s.position.set(o.ox+16,.04,o.oz+19),o.group.add(s);
-let n=new J(new Y(6,.05,6),t.B);n.position.set(o.ox-20,.04,o.oz+17),o.group.add(n);
-[[o.ox+2,o.oz-20],[o.ox+1,o.oz+2],[o.ox+18,o.oz+6],[o.ox-22,o.oz+12]].forEach(i=>{let r=new J(new Y(.9,.9,.9),t.crate);r.position.set(i[0],.45,i[1]),o.group.add(r),o.props.push({prop:!0,state:"ok",x:i[0],z:i[1],gy:0,h:.9,mesh:r,gfly:null})});
-o.hemi=new pa(16773568,12170218,.9),o.hemi.visible=!1,g.scene.add(o.hemi),o.group.visible=!1}
+for(let k in buckets){if(!buckets[k].length)continue;let mesh=new J(yt(buckets[k]),mats[k]||mats.stone);mesh.castShadow=k!=="floor"&&k!=="path"&&k!=="ceil",mesh.receiveShadow=!0,mesh.matrixAutoUpdate=!1,mesh.updateMatrix(),o.group.add(mesh)}
+function win(x,y,z,w,h,d){let m=new J(new Y(w,h,d),mats.win);m.position.set(o.ox+x,y,o.oz+z),m.receiveShadow=!0,o.group.add(m)}
+for(let z=-18;z<=14;z+=5.2)win(23.16,1.75,z,.08,.9,1.45);
+for(let x=-8;x<=8;x+=4)win(x,1.85,-33.92,1.25,.78,.08);
+let skyMat=new Bt({map:pvpSkyTex(),side:Co,fog:!1});let sky=new J(new Me(150,28,18),skyMat);sky.position.set(o.ox,6,o.oz),sky.frustumCulled=!1,o.group.add(sky);
+function mark(letter,hex,x,z,bx,bz){let m=new Bt({map:pvpSign(letter,hex),polygonOffset:!0,polygonOffsetFactor:-2,polygonOffsetUnits:-8});let a=new J(new Y(4.6,.015,4.6),m);a.position.set(o.ox+x,.02,o.oz+z),a.receiveShadow=!0,o.group.add(a);let b=new J(new Y(1.35,1.35,.06),m);b.position.set(o.ox+bx,1.8,o.oz+bz),o.group.add(b)}
+mark("A","#e2b15a",16,20,16,26.15);mark("B","#d7a24a",-22,16,-21.2,26.28);
+function lamp(x,y,z,color,power,dist){let L=new Ho(color,power,dist,2);L.position.set(o.ox+x,y,o.oz+z),o.group.add(L);let shade=new J(new ct(.2,.07,.18,10),mats.metal);shade.position.set(o.ox+x,y+.16,o.oz+z),shade.castShadow=!0;let bulb=new J(new Me(.07,8,6),new Bt({color:color}));bulb.position.set(o.ox+x,y,o.oz+z);let arm=new J(new Y(.05,.42,.05),mats.metal);arm.position.set(o.ox+x,y+.36,o.oz+z),arm.castShadow=!0,o.group.add(shade,bulb,arm)}
+lamp(0,2.45,-29,16769944,34,14);
+lamp(2,2.45,31.4,14741247,28,12);
+lamp(16,3.15,18,16773568,22,16);
+lamp(-24,2.25,14,16773568,22,14);
+lamp(0,3.6,0,16775885,18,18);
+lamp(19,3.1,-8,16775885,18,16);
+o.hemi=new pa(14023029,13010026,1.15),o.group.add(o.hemi);let sun=new ii(16775389,5.4,0,1.12,.55,0);sun.position.set(o.ox-14,46,o.oz-12),sun.target.position.set(o.ox+2,0,o.oz+2),sun.castShadow=!0,sun.shadow.mapSize.set(2048,2048),sun.shadow.camera.near=6,sun.shadow.camera.far=90,sun.shadow.bias=-8e-4,sun.shadow.normalBias=.08,sun.shadow.radius=2,sun.target.updateMatrixWorld(),o.group.add(sun,sun.target),o.group.visible=!1}
 function pvpHumans(){if(!g.net||!g.net.members)return 1;let o=0;for(let t of g.net.members)t&&o++;return o||1}
 function pvpAllowBots(){return !g.net||g.net.role==="host"&&pvpHumans()<=1}
 function pvpSpawns(o){let t=g.pvp,e=t.ox,s=t.oz;return o===0?[{x:e,z:s-30,yaw:Math.PI},{x:e-4,z:s-30,yaw:Math.PI},{x:e+4,z:s-29.2,yaw:Math.PI},{x:e,z:s-27,yaw:Math.PI}]:[{x:e,z:s+31,yaw:0},{x:e-5,z:s+31,yaw:0},{x:e+6,z:s+30,yaw:0},{x:e+1,z:s+28,yaw:0}]}
@@ -4828,9 +4871,9 @@ function pvpSpawnOf(o,t){let e=pvpSpawns(o);return e[Math.abs(t|0)%e.length]}
 function pvpPlace(o){if(!o)return;let t=o.pvpTeam!=null?o.pvpTeam:(o.slot||0)%2;o.pvpTeam=t;let e=pvpSpawnOf(t,o.slot||0);o.pos.set(e.x,.08,e.z),o.yaw=e.yaw,o.pitch=0,o.vel&&o.vel.set(0,0,0),o.mantle=null,o===g.player&&pvpArm()}
 function pvpArm(){if(!g.weapons)return;g.weapons.owned=g.weapons.owned.map(()=>!0),g.weapons.ammoMul=4;for(let o of g.weapons.w)o.def&&!o.def.charges&&(o.mag=o.def.mag,o.reserve=o.def.maxReserve*4)}
 function pvpClearBots(o){for(let t of o.bots)t.mesh&&t.mesh.parent&&t.mesh.parent.remove(t.mesh);o.bots.length=0}
-function pvpAddBot(o,t,e,s){let n=pvpSpawnOf(t,s+1),i=new Xt,r=new J(new ct(.34,.36,1.15,8),new Bt({color:t?3110847:12687656})),a=new J(new Y(.36,.34,.36),new Bt({color:t?14217448:15785136})),l=new J(new Y(.1,.08,.16),new Bt({color:1118481}));r.position.y=.72,a.position.y=1.42,l.position.set(0,1.42,.2),i.add(r),i.add(a),i.add(l),i.position.set(n.x,0,n.z),o.group.add(i);let c={team:t,name:e,hp:100,dead:!1,respawn:0,pos:new T(n.x,0,n.z),vel:new T,yaw:n.yaw,mesh:i,cool:.4,see:0,wp:s%18,stuck:0,lx:n.x,lz:n.z,ent:null};c.ent={pos:c.pos,vel:c.vel,radius:.32,height:1.7,onGround:!1,stepUp:.55},o.bots.push(c)}
+function pvpAddBot(o,t,e,s){let n=pvpSpawnOf(t,s+1),i=new Xt,r=new J(new ct(.32,.34,1.02,10),new W({color:t?3491954:11567576,roughness:.84})),a=new J(new Me(.18,12,8),new W({color:t?14255890:12879992,roughness:.72})),l=new J(new Y(.07,.09,.32),new W({color:2236962,roughness:.45,metalness:.35}));r.position.y=.7,a.position.y=1.48,l.position.set(.16,1.05,.22),r.castShadow=a.castShadow=l.castShadow=!0,r.receiveShadow=a.receiveShadow=!0,i.add(r),i.add(a),i.add(l),i.position.set(n.x,0,n.z),o.group.add(i);let c={team:t,name:e,hp:100,dead:!1,respawn:0,pos:new T(n.x,0,n.z),vel:new T,yaw:n.yaw,mesh:i,cool:.4,see:0,wp:s%18,stuck:0,lx:n.x,lz:n.z,ent:null};c.ent={pos:c.pos,vel:c.vel,radius:.32,height:1.7,onGround:!1,stepUp:.55},o.bots.push(c)}
 function pvpSpawnBots(o){pvpClearBots(o);let t=o.team?0:1,e=t?["\u0421\u0432\u0430\u0442","\u041a\u0440\u043e\u0442","\u0412\u043e\u043b\u043a","\u0413\u0440\u043e\u043c"]:["\u0410\u0437\u0430\u043c\u0430\u0442","\u0411\u0435\u043a","\u0415\u0440\u043b\u0430\u043d","\u0416\u0430\u043d"];for(let s=0;s<4;s++)pvpAddBot(o,t,e[s],s*3);pvpAddBot(o,o.team,o.team?"\u0428\u0440\u0430\u043c":"\u0414\u0430\u043d\u0438\u044f\u0440",2)}
-function pvpEnter(o,t,e){pvpEnsure(o),o.on||(o._set=g.world.activeSet||"zav",o._fog=g.scene.fog?{c:g.scene.fog.color.getHex(),d:g.scene.fog.density}:null,o._bg=g.scene.background&&g.scene.background.getHex?g.scene.background.getHex():null),o.team=e|0,o.score[0]=0,o.score[1]=0,o.kills=0,o.deaths=0,o.round=1,o.respawn=0,o.on=!0,g.zombies&&g.zombies.clear&&g.zombies.clear(),g.station&&g.station.root&&(g.station.root.visible=!1),g.train&&g.train.group&&(g.train.group.visible=!1),g.destruct&&g.destruct.root&&(g.destruct.root.visible=!1),o.group.visible=!0,o.hemi&&(o.hemi.visible=!0),g.world.useSet("dust"),g.scene.fog&&(g.scene.fog.color.setHex(12049416),g.scene.fog.density=.007),g.scene.background&&g.scene.background.setHex&&g.scene.background.setHex(9355498),g.player.pvpTeam=g.net?(g.player.slot||0)%2:o.team,g.player.dead=!1,g.player.health=100,pvpPlace(g.player),pvpAllowBots()?pvpSpawnBots(o):pvpClearBots(o);let s=nt("lbl-t"),n=nt("lbl-ct");s&&(s.textContent="T"),n&&(n.textContent="CT");let i=g.player.pvpTeam?"\u0441\u043f\u0435\u0446\u043d\u0430\u0437":"\u0442\u0435\u0440\u0440\u043e\u0440\u0438\u0441\u0442\u044b";t&&t.say&&t.say("DUST2",g.net?"\u0427\u0451\u0442\u043d\u044b\u0439 \u0441\u043b\u043e\u0442 \u2014 \u0441\u043f\u0435\u0446\u043d\u0430\u0437, \u043d\u0435\u0447\u0451\u0442\u043d\u044b\u0439 \u2014 \u0442\u0435\u0440\u0440\u043e\u0440\u0438\u0441\u0442\u044b. \u0414\u043e 20.":"\u0412\u044b \u2014 "+i+". \u0414\u043e 20 \u0443\u0431\u0438\u0439\u0441\u0442\u0432.",4.2)}
+function pvpEnter(o,t,e){pvpEnsure(o),o.on||(o._set=g.world.activeSet||"zav",o._fog=g.scene.fog?{c:g.scene.fog.color.getHex(),d:g.scene.fog.density}:null,o._bg=g.scene.background&&g.scene.background.getHex?g.scene.background.getHex():null),o.team=e|0,o.score[0]=0,o.score[1]=0,o.kills=0,o.deaths=0,o.round=1,o.respawn=0,o.on=!0,g.zombies&&g.zombies.clear&&g.zombies.clear(),g.station&&g.station.root&&(g.station.root.visible=!1),g.train&&g.train.group&&(g.train.group.visible=!1),g.destruct&&g.destruct.root&&(g.destruct.root.visible=!1),o.group.visible=!0,o.hemi&&(o.hemi.visible=!0),g.world.useSet("dust"),g.scene.fog&&(g.scene.fog.color.setHex(14014758),g.scene.fog.density=.0055),g.scene.background&&g.scene.background.setHex&&g.scene.background.setHex(5156812),g.player.pvpTeam=g.net?(g.player.slot||0)%2:o.team,g.player.dead=!1,g.player.health=100,pvpPlace(g.player),pvpAllowBots()?pvpSpawnBots(o):pvpClearBots(o);let s=nt("lbl-t"),n=nt("lbl-ct");s&&(s.textContent="T"),n&&(n.textContent="CT");let i=g.player.pvpTeam?"\u0441\u043f\u0435\u0446\u043d\u0430\u0437":"\u0442\u0435\u0440\u0440\u043e\u0440\u0438\u0441\u0442\u044b";t&&t.say&&t.say("DUST2",g.net?"\u0427\u0451\u0442\u043d\u044b\u0439 \u0441\u043b\u043e\u0442 \u2014 \u0441\u043f\u0435\u0446\u043d\u0430\u0437, \u043d\u0435\u0447\u0451\u0442\u043d\u044b\u0439 \u2014 \u0442\u0435\u0440\u0440\u043e\u0440\u0438\u0441\u0442\u044b. \u0414\u043e 20.":"\u0412\u044b \u2014 "+i+". \u0414\u043e 20 \u0443\u0431\u0438\u0439\u0441\u0442\u0432.",4.2)}
 function pvpLeave(o){if(!o)return;o.on=!1,pvpClearBots(o),o.group&&(o.group.visible=!1),o.hemi&&(o.hemi.visible=!1),g.station&&g.station.root&&(g.station.root.visible=!0),g.train&&g.train.group&&(g.train.group.visible=!0),g.destruct&&g.destruct.root&&(g.destruct.root.visible=!0),g.world&&o.built&&g.world.useSet(o._set||"zav"),g.scene&&g.scene.fog&&o._fog&&(g.scene.fog.color.setHex(o._fog.c),g.scene.fog.density=o._fog.d),g.scene&&g.scene.background&&g.scene.background.setHex&&o._bg!=null&&g.scene.background.setHex(o._bg);let t=nt("lbl-t"),e=nt("lbl-ct");t&&(t.textContent="\u0412\u041e\u041b\u041d\u0410"),e&&(e.textContent="\u0417\u041e\u041c\u0411\u0418");let s=nt("pvp-quit");s&&(s.hidden=!0)}
 function pvpLine(){if(!g.pvp)return"DUST2";if(g.player&&g.player.dead)return"\u0420\u0435\u0441\u043f\u0430\u0443\u043d "+Math.max(0,Math.ceil(g.pvp.respawn));let o=g.player&&g.player.pvpTeam?"\u0441\u043f\u0435\u0446\u043d\u0430\u0437":"\u0442\u0435\u0440\u0440\u043e\u0440\u0438\u0441\u0442\u044b";return"DUST2 \u00b7 "+o+" \u00b7 \u0440\u0430\u0443\u043d\u0434 "+(g.pvp.round||1)}
 function pvpRoute(o){if(o._route)return o._route;let t=[[0,-30],[0,-20],[0,-8],[0,2],[0,10],[2,30],[16,20],[18,4],[18,-12],[18,-20],[0,-20],[-12,-20.4],[-22,-20.4],[-22,0],[-22,10],[-16,20],[-8,4.5],[0,4]];return o._route=t.map(e=>[e[0]+o.ox,e[1]+o.oz]),o._route}
