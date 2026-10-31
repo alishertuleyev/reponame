@@ -1,0 +1,26 @@
+{
+  "listen": "0.0.0.0",
+  "port": 8787,
+  "topic": "alarm",
+  "token": "",
+  "poll_seconds": 1,
+  "repeat_seconds": 30,
+  "server_beep": true,
+  "ntfy_url": "",
+  "autocell_status_url": "http://127.0.0.1:5000/api/status_data",
+  "snap7": {
+    "host": "192.168.0.10",
+    "rack": 0,
+    "slot": 1
+  },
+  "alarms": [
+    {
+      "id": "asrs1_error",
+      "title": "ASRS1 ошибка задания",
+      "message": "Код from_WMS_dn_jb_error_ASRS1 не ноль",
+      "via": "autocell",
+      "signal": "from_WMS_dn_jb_error_ASRS1",
+      "when": "nonzero"
+    }
+  ]
+}
